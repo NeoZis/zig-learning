@@ -1,18 +1,26 @@
 const std = @import("std");
 
 pub fn main() !void {
-    var firstArgument: [5]u8 = undefined;
-    var secondArgument: [5]u8 = undefined;
-    const stdin = std.io.getStdIn().reader();
+    const stdin = std.io.getStdIn();
     const stdout = std.io.getStdOut().writer();
 
-    try stdout.print("Please enter first number:", .{});
-    _ = try stdin.readUntilDelimiter(&firstArgument, '\n');
-    try stdout.print("Please enter second number:", .{});
-    _ = try stdin.readUntilDelimiter(&secondArgument, '\n');
-    const firstNumber = try std.fmt.parseInt(i32, firstArgument, 10);
-    const secondNumber = try std.fmt.parseInt(i32, secondArgument, 10);
+    var lol: [20]u8 = undefined;
 
-    try stdout.print("The user entered: {s} and {s} \n", .{ firstNumber, secondNumber });
-    try stdout.print("The sum is: {s} \n", .{firstNumber + secondNumber});
+    try stdout.print("Please enter first number:\n", .{});
+    const amt = try stdin.reader().readUntilDelimiter(&lol, '\n');
+
+    const number = try std.fmt.parseInt(u8, amt, 10);
+
+    try stdout.print("Please enter second number:\n", .{});
+    const amt2 = try stdin.reader().readUntilDelimiter(&lol, '\n');
+
+    const number2 = try std.fmt.parseInt(u8, amt2, 10);
+    try stdout.print("You entered {d} and {d}\n", .{ number, number2 });
+
+    try stdout.print("Please enter operation: +, -, / or *:\n", .{});
+
+    var operation: [10]u8 = undefined;
+    const operation_buf = try stdin.reader().readUntilDelimiter(&operation, '\n');
+
+    try stdout.print("You entered operation {s}\n", .{operation_buf});
 }
